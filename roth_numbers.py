@@ -1,101 +1,67 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "90d27bd1",
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "from itertools import combinations\n",
-    "import time\n",
-    "\n",
-    "def has_arithmetic_progression(seq):\n",
-    "    \"\"\"\n",
-    "    Checks if a given sequence has an arithmetic progression of length 3.\n",
-    "    \"\"\"\n",
-    "    for i in range(len(seq)):\n",
-    "        for j in range(i + 1, len(seq)):\n",
-    "            for k in range(j + 1, len(seq)):\n",
-    "                if seq[j] - seq[i] == seq[k] - seq[j]:\n",
-    "                    return True\n",
-    "    return False\n",
-    "\n",
-    "def find_max_a_sequence(n):\n",
-    "    \"\"\"\n",
-    "    Finds the maximum length of sequences without arithmetic progressions\n",
-    "    in the range from 1 to n.\n",
-    "    \"\"\"\n",
-    "    max_length = 0\n",
-    "    max_sequences = []\n",
-    "\n",
-    "    for r in range(1, n + 1):\n",
-    "        candidates = list(combinations(range(1, n + 1), r))\n",
-    "        valid_sequences = []\n",
-    "\n",
-    "        for candidate in candidates:\n",
-    "            if not has_arithmetic_progression(candidate):\n",
-    "                valid_sequences.append(candidate)\n",
-    "\n",
-    "        if len(valid_sequences) > 0:\n",
-    "            if r > max_length:\n",
-    "                max_length = r\n",
-    "                max_sequences = valid_sequences\n",
-    "            elif r == max_length:\n",
-    "                max_sequences.extend(valid_sequences)\n",
-    "\n",
-    "    return max_length, max_sequences\n",
-    "\n",
-    "# Prompt the user to input the value of n\n",
-    "n = int(input(\"Enter the value of n: \"))\n",
-    "\n",
-    "start_time = time.time()\n",
-    "length, sequences = find_max_a_sequence(n)\n",
-    "end_time = time.time()\n",
-    "\n",
-    "print(f\"r({n}) = {length}\")\n",
-    "print(f\"Number of maximal sets of r({n}): {len(sequences)}\")\n",
-    "print(\"Maximal Sequences:\")\n",
-    "for seq in sequences:\n",
-    "    print(seq)\n",
-    "\n",
-    "elapsed_time = end_time - start_time\n",
-    "print(\"Execution Time:\")\n",
-    "\n",
-    "if elapsed_time < 60:\n",
-    "    print(f\"{elapsed_time:.2f} seconds\")\n",
-    "elif elapsed_time < 3600:\n",
-    "    minutes = elapsed_time // 60\n",
-    "    seconds = elapsed_time % 60\n",
-    "    print(f\"{minutes:.0f} minutes {seconds:.2f} seconds\")\n",
-    "else:\n",
-    "    hours = elapsed_time // 3600\n",
-    "    remaining_time = elapsed_time % 3600\n",
-    "    minutes = remaining_time // 60\n",
-    "    seconds = remaining_time % 60\n",
-    "    print(f\"{hours:.0f} hours {minutes:.0f} minutes {seconds:.2f} seconds\")\n"
-   ]
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.9.12"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
-}
+from itertools import combinations
+import time
+
+def has_arithmetic_progression(seq):
+    """
+    Checks if a given sequence has an arithmetic progression of length 3.
+    """
+    for i in range(len(seq)):
+        for j in range(i + 1, len(seq)):
+            for k in range(j + 1, len(seq)):
+                if seq[j] - seq[i] == seq[k] - seq[j]:
+                    return True
+    return False
+
+def find_max_a_sequence(n):
+    """
+    Finds the maximum length of sequences without arithmetic progressions
+    in the range from 1 to n.
+    """
+    max_length = 0
+    max_sequences = []
+
+    for r in range(1, n + 1):
+        candidates = list(combinations(range(1, n + 1), r))
+        valid_sequences = []
+
+        for candidate in candidates:
+            if not has_arithmetic_progression(candidate):
+                valid_sequences.append(candidate)
+
+        if len(valid_sequences) > 0:
+            if r > max_length:
+                max_length = r
+                max_sequences = valid_sequences
+            elif r == max_length:
+                max_sequences.extend(valid_sequences)
+
+    return max_length, max_sequences
+
+# Prompt the user to input the value of n
+n = int(input("Enter the value of n: "))
+
+start_time = time.time()
+length, sequences = find_max_a_sequence(n)
+end_time = time.time()
+
+print(f"r({n}) = {length}")
+print(f"Number of maximal sets of r({n}): {len(sequences)}")
+print("Maximal Sequences:")
+for seq in sequences:
+    print(seq)
+
+elapsed_time = end_time - start_time
+print("Execution Time:")
+
+if elapsed_time < 60:
+    print(f"{elapsed_time:.2f} seconds")
+elif elapsed_time < 3600:
+    minutes = elapsed_time // 60
+    seconds = elapsed_time % 60
+    print(f"{minutes:.0f} minutes {seconds:.2f} seconds")
+else:
+    hours = elapsed_time // 3600
+    remaining_time = elapsed_time % 3600
+    minutes = remaining_time // 60
+    seconds = remaining_time % 60
+    print(f"{hours:.0f} hours {minutes:.0f} minutes {seconds:.2f} seconds")
